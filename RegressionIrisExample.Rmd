@@ -1,5 +1,5 @@
 ---
-title: "Regression Iris Test"
+title: "Linear Regression Iris Data, Example from DZone Refcardz"
 output: html_notebook
 ---
 Prepare Data IRIS:
