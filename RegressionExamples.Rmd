@@ -1,0 +1,84 @@
+---
+title: "RegressionVSClasssification"
+output: html_notebook
+---
+
+We use iris and prestige data:
+
+Load Prestige Data
+
+```{r}
+library(car)
+```
+```{r}
+Prestige
+```
+```{r}
+summary(Prestige)
+```
+```{r}
+pairs(main="Prestige Data", Prestige)
+```
+```{r}
+plot.ts(main="Prestige Data", Prestige)
+```
+```{r}
+d <- data.frame(education = Prestige$education, income = Prestige$income, women = Prestige$women, prestige = Prestige$prestige, census = Prestige$census)
+m <- cor(d)
+library('corrplot')
+corrplot(m, method="circle")
+```
+Education and income has a high influence to the prestige !!!
+Prepase Data Prestige:
+```{r}
+testidx_pre <- which(1:nrow(Prestige)%%4==0)
+```
+```{r}
+prestige_train <- Prestige[-testidx_pre,]
+```
+```{r}
+prestige_test <- Prestige[testidx_pre,]
+```
+Prepare Data IRIS:
+```{r}
+pairs(main="Iris Data", iris)
+```
+```{r}
+plot.ts(main="Iris Data", iris)
+```
+Create build index:
+```{r}
+testidx <- which(1:length(iris[,1])%%5==0)
+```
+separate training data from test:
+```{r}
+iristrain <- iris[-testidx,]
+```
+```{r}
+iristest <- iris[testidx,]
+```
+--REGRESSION--
+It based on assumption that a linear relationship exists between the input and output variables.
+```{r}
+model <- lm(prestige~., data=prestige_train)
+```
+Use model for repdiction the test data
+```{r}
+prediciton <- predict(model, newdata=prestige_test)
+```
+Check coorelation with current result
+```{r}
+cor(prediciton, prestige_test$prestige)
+summary(model)
+```
+```{r}
+# curve(4.201e+00*x^5 + 1.150e-03*x^4 + 3.630e-02*x^3 + 1.865e-03*x^2 + 1.131e+01*x^1 + 1.987e+00*x^0 ,from=1, to=200,, xlab="x", ylab="prestige")
+curve(4.201e+00*x + 1.150e-03,from=1, to=100, xlab="x", ylab="prestige")
+```
+```{r}
+plot(model)
+```
+```{r}
+prediciton
+```
+
