@@ -1,0 +1,22 @@
+---
+title: "Regression Iris Test"
+output: html_notebook
+---
+Prepare Data IRIS:
+```{r}
+pairs(main="Iris Data", iris)
+```
+```{r}
+plot.ts(main="Iris Data", iris)
+```
+Create build index:
+```{r}
+testidx <- which(1:length(iris[,1])%%5==0)
+```
+separate training data from test:
+```{r}
+iristrain <- iris[-testidx,]
+```
+```{r}
+iristest <- iris[testidx,]
+```

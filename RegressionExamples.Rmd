@@ -1,9 +1,7 @@
 ---
-title: "RegressionVSClasssification"
+title: "Linear Regression Prestige Data, Example from DZone Refcardz"
 output: html_notebook
 ---
-
-We use iris and prestige data:
 
 Load Prestige Data
 
@@ -39,24 +37,7 @@ prestige_train <- Prestige[-testidx_pre,]
 ```{r}
 prestige_test <- Prestige[testidx_pre,]
 ```
-Prepare Data IRIS:
-```{r}
-pairs(main="Iris Data", iris)
-```
-```{r}
-plot.ts(main="Iris Data", iris)
-```
-Create build index:
-```{r}
-testidx <- which(1:length(iris[,1])%%5==0)
-```
-separate training data from test:
-```{r}
-iristrain <- iris[-testidx,]
-```
-```{r}
-iristest <- iris[testidx,]
-```
+
 --REGRESSION--
 It based on assumption that a linear relationship exists between the input and output variables.
 ```{r}
