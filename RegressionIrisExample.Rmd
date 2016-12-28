@@ -2,13 +2,27 @@
 title: "Linear Regression Iris Data, Example from DZone Refcardz"
 output: html_notebook
 ---
-Prepare Data IRIS:
+Data IRIS:
+```{r}
+iris
+```
+
+```{r}
+summary(iris)
+```
 ```{r}
 pairs(main="Iris Data", iris)
 ```
 ```{r}
 plot.ts(main="Iris Data", iris)
 ```
+```{r}
+d <- data.frame(Sepal.Length = iris$Sepal.Length, Sepal.Width = iris$Sepal.Width, Petal.Length = iris$Petal.Length, Petal.Width = iris$Petal.Width)
+m <- cor(d)
+library('corrplot')
+corrplot(m, method="circle")
+```
+
 Create build index:
 ```{r}
 testidx <- which(1:length(iris[,1])%%5==0)
@@ -19,4 +33,24 @@ iristrain <- iris[-testidx,]
 ```
 ```{r}
 iristest <- iris[testidx,]
+```
+                                     Example 1 (Petal.Width).
+####
+Prepare Data Iris:
+
+Build a learn model: (for petal.width attribute)
+```{r}
+model <- lm(Petal.Width~., data=iristrain)
+```
+Use model for prediction the test data
+```{r}
+prediciton <- predict(model, newdata=iristest)
+```
+Check correlation with current result, but why ? 
+```{r}
+cor(prediciton, iristest$Petal.Width)
+```
+Show result:
+```{r}
+summary(model)
 ```
