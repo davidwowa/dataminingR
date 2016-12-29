@@ -1,0 +1,25 @@
+---
+title: "Random Forest"
+output: html_notebook
+---
+```{r}
+require(randomForest)
+```
+Clear data from NA.
+```{r}
+clearedPrestige <- Prestige[complete.cases(Prestige),]
+```
+Use random forest, for type column.
+```{r}
+clearedPrestige.rf <- randomForest(clearedPrestige[,-6], clearedPrestige[,6], prox=TRUE)
+```
+Class centers:
+```{r}
+clearedPrestige.p <- classCenter(clearedPrestige[,-6], clearedPrestige[,6], clearedPrestige.rf$prox)
+```
+```{r}
+plot(clearedPrestige[,3], clearedPrestige[,4], pch=21, xlab=names(clearedPrestige)[3], ylab=names(clearedPrestige)[4],
+         bg=c("red", "blue", "green")[as.numeric(factor(clearedPrestige$type))],
+         main="Prestige Data with Prototypes")
+points(clearedPrestige.p[,3], clearedPrestige.p[,4], pch=21, cex=2, bg=c("red", "blue", "green"))
+```
