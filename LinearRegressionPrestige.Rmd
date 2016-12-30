@@ -1,0 +1,81 @@
+---
+title: "Linear Regression Prestige Data, Example from DZone Refcardz"
+output: html_notebook
+---
+Common Information:
+1. Is for numeric values
+2. Linear regression is based on the assumption that a linear relationship exists between the input and output variable.
+3. Learning Alg. will learn the set of parameters such that the sum of square error(yactual - yestimate)2 is minimized.
+
+Load Prestige Data:
+```{r}
+library(car)
+```
+```{r}
+Prestige
+```
+```{r}
+summary(Prestige)
+```
+```{r}
+pairs(main="Prestige Data", Prestige)
+```
+```{r}
+plot.ts(main="Prestige Data", Prestige)
+```
+In correlation matrix we see, that education and income in relation to prestige standing. 
+```{r}
+d <- data.frame(education = Prestige$education, income = Prestige$income, women = Prestige$women, prestige = Prestige$prestige, census = Prestige$census)
+m <- cor(d)
+library('corrplot')
+corrplot(m, method="circle")
+```
+Education and income has a high influence to the prestige !!!
+
+                                      Example 1 (Prestige).
+####
+Prepare Data Prestige:
+Build index which later use only 1/4 from data as Training.
+```{r}
+testidx_pre <- which(1:nrow(Prestige)%%4==0)
+```
+Split data:
+```{r}
+prestige_train <- Prestige[-testidx_pre,]
+```
+```{r}
+prestige_test <- Prestige[testidx_pre,]
+```
+Build a learn model: (for prestige attribute)
+```{r}
+model <- lm(prestige~., data=prestige_train)
+```
+Use model for prediction the test data
+```{r}
+prediciton <- predict(model, newdata=prestige_test)
+```
+Check correlation with current result, but why ? 
+```{r}
+cor(prediciton, prestige_test$prestige)
+```
+Show result:
+```{r}
+summary(model)
+```
+```{r}
+curve(1.150e-03*x + 4.201e+00,from=1, to=25000, xlab="income", ylab="prestige", asp=500, main="Prestige and Income")
+```
+```{r}
+plot(Prestige$income, Prestige$prestige, col="green", lwd=3, xlab = "Income", ylab = "Prestige", main = "Prestige in. Income")
+abline(coef(model)[2:3])
+```
+```{r}
+plot(Prestige$education, Prestige$prestige, col="red", lwd=3, xlab = "Education", ylab = "Prestige", main = "Prestige in. education")
+abline(coef(model)[2:3])
+```
+```{r}
+plot(model)
+```
+```{r}
+prediciton
+```

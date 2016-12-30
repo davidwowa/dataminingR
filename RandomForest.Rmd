@@ -13,9 +13,19 @@ Use random forest, for type column.
 ```{r}
 clearedPrestige.rf <- randomForest(clearedPrestige[,-6], clearedPrestige[,6], prox=TRUE)
 ```
+```{r}
+clearedPrestige.rf
+```
 Class centers:
 ```{r}
 clearedPrestige.p <- classCenter(clearedPrestige[,-6], clearedPrestige[,6], clearedPrestige.rf$prox)
+```
+Clusters:
+```{r}
+clearedPrestige.p
+```
+```{r}
+clearedPrestige[which(clearedPrestige$income == max(clearedPrestige$income)),]
 ```
 ```{r}
 plot(clearedPrestige[,3], clearedPrestige[,4], pch=21, xlab=names(clearedPrestige)[3], ylab=names(clearedPrestige)[4],

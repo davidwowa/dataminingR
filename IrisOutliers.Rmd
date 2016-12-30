@@ -1,0 +1,21 @@
+---
+title: "1.1a"
+output: html_notebook
+---
+Read Data
+```{r}
+irout <- read.csv("/Users/David/Downloads/irisoutlier.data", header = TRUE, sep = " ", dec = ".")
+```
+```{r}
+irout
+```
+```{r}
+summary(irout)
+```
+```{r}
+pairs(irout, main="Iris with outlier", col=irout$Species)
+```
+```{r}
+irout[which(irout$Petal.Length == max(irout$Petal.Length)),]
+irout[which(irout$Petal.Width == max(irout$Petal.Width)),]
+```
