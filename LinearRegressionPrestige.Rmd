@@ -66,7 +66,7 @@ summary(model)
 curve(1.150e-03*x + 4.201e+00,from=1, to=25000, xlab="income", ylab="prestige", asp=500, main="Prestige and Income")
 ```
 ```{r}
-plot(Prestige$income, Prestige$prestige, col="green", lwd=3, xlab = "Income", ylab = "Prestige", main = "Prestige in. Income")
+plot(Prestige$income, Prestige$prestige, col="green", lwd=3, xlab = "Income", ylab = "Prestige", main = "Prestige in. Income", xlim = c(600, 26000))
 abline(coef(model)[2:3])
 ```
 ```{r}

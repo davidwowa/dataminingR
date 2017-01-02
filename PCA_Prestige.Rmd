@@ -1,0 +1,34 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+require(car)
+```
+Clear data:
+```{r}
+clearedPrestige <- Prestige[complete.cases(Prestige),]
+#clearedPrestige[is.infinite(clearedPrestige$women),] <- 0.00
+```
+Remove Column type
+```{r}
+log.pr <- log(clearedPrestige[, 1:5])
+types <- clearedPrestige[, 6]
+```
+Remove inifinites
+```{r}
+log.pr[is.infinite(log.pr$women),] <- 0
+```
+Show PCA-Data
+```{r}
+pr.pca <- prcomp(log.pr, center=TRUE, scale. = TRUE)
+pr.pca
+```
+```{r}
+plot(pr.pca, type="l", main="PCA-Data")
+```
+```{r}
+pr.pca$rotation=-pr.pca$rotation
+pr.pca$x=-pr.pca$x
+biplot(pr.pca, cex=0.5)
+```

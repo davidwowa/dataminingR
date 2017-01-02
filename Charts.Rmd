@@ -1,0 +1,30 @@
+---
+title: "Charts"
+output: html_notebook
+---
+Get prestige data.
+```{r}
+require(car)
+```
+Counts of types.
+```{r}
+counts <- table(Prestige$type)
+barplot(counts, main="Types of prestige Data", xlab="Number of Types")
+```
+Histogram for Income.
+```{r}
+hist(Prestige$income, main = "Income Histogram", xlab="Income")
+```
+Histogram for Income.
+```{r}
+hist(Prestige$prestige, main = "Prestige Histogram", xlab="Prestige")
+```
+```{r}
+boxplot(Sepal.Width ~ Species, data=iris)
+```
+```{r}
+require(scatterplot3d)
+scatterplot3d(x = Prestige$income, y = Prestige$prestige, z = Prestige$education, highlight.3d=TRUE,
+          col.axis="blue", col.grid="lightblue",
+          pch=1, main="3D Prestige", type="h")
+```
