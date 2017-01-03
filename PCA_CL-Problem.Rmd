@@ -1,0 +1,37 @@
+---
+title: "PCA-Example with CL Problem Data"
+output: html_notebook
+---
+```{r}
+mydata <- read.table("~/Desktop/original/cl_problem.txt", header = T)
+numericalValues <- mydata[, 1:5]
+ordinalValues <- mydata[, 6]
+```
+Normalize data with z-scores
+```{r}
+normalizedData <- scale(numericalValues)
+summary(normalizedData)
+```
+```{r}
+# par(mfrow=c(2, 2))
+# hist(iris$Sepal.Length, main="Sepal.Length", xlab = "Sepal.Length")
+# hist(iris$Sepal.Width, main="Sepal.Width", xlab = "Sepal.Width")
+# hist(normalizedData[,1], main="Normalized Sepal.Length", xlab = "Sepal.Length")
+# hist(normalizedData[,2], main="Sepal.Width prestige", xlab = "Sepal.Width")
+```
+Show PCA-Data
+```{r}
+pca <- prcomp(normalizedData, center=TRUE, scale. = TRUE)
+pca
+```
+```{r}
+plot(pca, main="PCA-Data")
+```
+Result:
+```{r}
+biplot(pca, cex=0.6, expand=1)
+# pdf("PCA-Plot-Iris-Data.pdf", biplot(pca, cex=0.6, expand=1))
+```
+```{r}
+pairs(mydata, col=mydata$classattr)
+```

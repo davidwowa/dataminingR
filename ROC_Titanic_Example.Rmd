@@ -132,6 +132,6 @@ summary(roc)
 ```
 ```{r}
 par(mfrow=c(2, 2))
-plot(roc$fpr, roc$tpr, main="ROC", xlab = "FPR", ylab = "TPR")
-plot(roc$threshold, roc$cost, main = "cost function", xlab = "threshold", ylab = "cost")
+plot(roc$fpr, roc$tpr, main="ROC", xlab = "FPR", ylab = "TPR", type="s")
+plot(roc$threshold, roc$cost, main = "cost function", xlab = "threshold", ylab = "cost", type="l")
 ```

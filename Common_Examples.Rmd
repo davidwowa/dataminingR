@@ -17,3 +17,7 @@ USArrests
 norma.data <- scale(USArrests)
 norma.data
 ```
+```{r}
+ndata <- data(aSAH)
+ndata
+```

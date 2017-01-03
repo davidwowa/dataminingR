@@ -1,0 +1,66 @@
+---
+title: "PCA-Example with Uniform Data"
+output: html_notebook
+---
+```{r}
+uniform_2 <- read.csv("~/Desktop/Datamining/uniform/uniform_2.csv", header = T)
+uniform_10 <- read.csv("~/Desktop/Datamining/uniform/uniform_10.csv", header = T)
+uniform_50 <- read.csv("~/Desktop/Datamining/uniform/uniform_50.csv", header = T)
+uniform_100 <- read.csv("~/Desktop/Datamining/uniform/uniform_100.csv", header = T)
+uniform_150 <- read.csv("~/Desktop/Datamining/uniform/uniform_150.csv", header = T)
+uniform_200 <- read.csv("~/Desktop/Datamining/uniform/uniform_200.csv", header = T)
+uniform_300 <- read.csv("~/Desktop/Datamining/uniform/uniform_300.csv", header = T)
+```
+Normalize data with z-scores
+```{r}
+normalizedData_2 <- scale(uniform_2)
+normalizedData_10 <- scale(uniform_10)
+normalizedData_50 <- scale(uniform_50)
+normalizedData_100 <- scale(uniform_100)
+normalizedData_150 <- scale(uniform_150)
+normalizedData_200 <- scale(uniform_200)
+normalizedData_300 <- scale(uniform_300)
+```
+```{r}
+# no sense
+# par(mfrow=c(4, 4))
+# pairs(uniform_2, main="2")
+# pairs(uniform_10, main="10")
+# pairs(uniform_50, main="50")
+# pairs(uniform_100, main="100")
+# pairs(uniform_150, main="150")
+# pairs(uniform_200, main="200")
+# pairs(uniform_300, main="300")
+```
+Show PCA-Data
+```{r}
+pca_2 <- prcomp(normalizedData_2, center=TRUE, scale. = TRUE)
+pca_10 <- prcomp(normalizedData_10, center=TRUE, scale. = TRUE)
+pca_50 <- prcomp(normalizedData_50, center=TRUE, scale. = TRUE)
+pca_100 <- prcomp(normalizedData_100, center=TRUE, scale. = TRUE)
+pca_150 <- prcomp(normalizedData_150, center=TRUE, scale. = TRUE)
+pca_200 <- prcomp(normalizedData_200, center=TRUE, scale. = TRUE)
+pca_300 <- prcomp(normalizedData_300, center=TRUE, scale. = TRUE)
+```
+Result:
+```{r}
+biplot(pca_2, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_10, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_50, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_100, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_150, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_200, cex=0.6, expand=1)
+```
+```{r}
+biplot(pca_300, cex=0.6, expand=1)
+```
