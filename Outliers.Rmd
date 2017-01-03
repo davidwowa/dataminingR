@@ -1,0 +1,36 @@
+---
+title: "1.1b"
+output: html_notebook
+---
+Read Data
+```{r}
+d <- read.csv("/Users/David/Downloads/3doutlier.data", header = TRUE, sep = " ", dec = ".")
+```
+```{r}
+d
+```
+```{r}
+summary(d)
+```
+```{r}
+pairs(d, main="Xx")
+```
+Outlier isn't to see.
+```{r}
+hist(d$X1)
+```
+```{r}
+hist(d$X2)
+```
+```{r}
+hist(d$X3)
+```
+
+```{r}
+plot(d$X3)
+```
+
+```{r}
+boxplot(d)
+tail(d)
+```

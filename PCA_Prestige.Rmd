@@ -5,30 +5,39 @@ output: html_notebook
 ```{r}
 require(car)
 ```
-Clear data:
+Clear and divide data:
 ```{r}
 clearedPrestige <- Prestige[complete.cases(Prestige),]
-#clearedPrestige[is.infinite(clearedPrestige$women),] <- 0.00
+# divide data
+numericalValues <- clearedPrestige[, 1:5]
+ordinalValues <- clearedPrestige[, 6]
+# clear data from inf-values
+numericalValues[is.infinite(numericalValues$women),] <- 0.00
 ```
-Remove Column type
+Normalize data with z-scores
 ```{r}
-log.pr <- log(clearedPrestige[, 1:5])
-types <- clearedPrestige[, 6]
+normalizedData <- scale(numericalValues)
+summary(normalizedData)
 ```
-Remove inifinites
 ```{r}
-log.pr[is.infinite(log.pr$women),] <- 0
+par(mfrow=c(2, 2))
+hist(clearedPrestige$income, main="Income", xlab = "Income")
+hist(clearedPrestige$prestige, main="Prestige", xlab = "Prestige")
+hist(normalizedData[,2], main="Normalized income", xlab = "Income")
+hist(normalizedData[,4], main="Normalized prestige", xlab = "Prestige")
 ```
 Show PCA-Data
 ```{r}
-pr.pca <- prcomp(log.pr, center=TRUE, scale. = TRUE)
-pr.pca
+pca <- prcomp(normalizedData, center=TRUE, scale. = TRUE)
+pca
 ```
 ```{r}
-plot(pr.pca, type="l", main="PCA-Data")
+plot(pca, main="PCA-Data")
 ```
 ```{r}
-pr.pca$rotation=-pr.pca$rotation
-pr.pca$x=-pr.pca$x
-biplot(pr.pca, cex=0.5)
+biplot(pca, cex=0.6, expand=1)
+pdf("test.pdf", biplot(pca, cex=0.6, expand=1))
+```
+
+```{r}
 ```

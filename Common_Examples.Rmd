@@ -1,0 +1,19 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+PCA
+```{r}
+data(USArrests)
+fa2 <- prcomp(USArrests, scale. = TRUE)
+#fa(USArrests,2,scores=TRUE)
+biplot(fa2)
+```
+```{r}
+USArrests
+```
+```{r}
+norma.data <- scale(USArrests)
+norma.data
+```
