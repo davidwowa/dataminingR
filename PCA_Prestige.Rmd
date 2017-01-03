@@ -34,10 +34,8 @@ pca
 ```{r}
 plot(pca, main="PCA-Data")
 ```
+Result:
 ```{r}
 biplot(pca, cex=0.6, expand=1)
 pdf("test.pdf", biplot(pca, cex=0.6, expand=1))
-```
-
-```{r}
 ```
