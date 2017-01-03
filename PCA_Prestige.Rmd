@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "PCA-Example with Prestige Data"
 output: html_notebook
 ---
 ```{r}
@@ -37,5 +37,5 @@ plot(pca, main="PCA-Data")
 Result:
 ```{r}
 biplot(pca, cex=0.6, expand=1)
-pdf("test.pdf", biplot(pca, cex=0.6, expand=1))
+pdf("PCA-Plot-Prestige-Data.pdf", biplot(pca, cex=0.6, expand=1))
 ```
