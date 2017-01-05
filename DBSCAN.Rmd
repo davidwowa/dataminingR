@@ -1,0 +1,73 @@
+---
+title: "DBSCAN Example"
+output: html_notebook
+---
+Source : http://www.sthda.com/english/wiki/dbscan-density-based-clustering-for-discovering-clusters-in-large-datasets-with-noise-unsupervised-machine-learning
+
+1 Concepts of density-based clustering
+
+Partitioning methods (K-means, PAM clustering) and hierarchical clustering are suitable for finding spherical-shaped clusters or convex clusters. In other words, they work well for compact and well separated clusters. Moreover, they are also severely affected by the presence of noise and outliers in the data.
+
+Unfortunately, real life data can contain: i) clusters of arbitrary shape such as those shown in the figure below (oval, linear and "S" shape clusters); ii) many outliers and noise.
+
+The figure below shows a dataset containing nonconvex clusters and outliers/noises. The simulated dataset multishapes [in factoextra package] is used.
+
+http://www.sthda.com/sthda/RDoc/figure/clustering/dbscan-density-based-clustering-data-dbscan-1.png
+
+```{r}
+# if(!require(devtools)) install.packages("devtools")
+# devtools::install_github("kassambara/factoextra")
+# install.packages("factoextra")
+library(factoextra)
+data(multishapes)
+df <- multishapes[, 1:2]
+set.seed(123)
+km.res <- kmeans(df, 5, nstart = 25)
+fviz_cluster(km.res, df, frame = FALSE, geom = "point")
+```
+We know there are 5 five clusters in the data, but it can be seen that k-means method inaccurately identify the 5 clusters.
+This chapter describes DBSCAN, a density-based clustering algorithm, introduced in Ester et al. 1996, which can be used to identify clusters of any shape in data set containing noise and outliers. DBSCAN stands for Density-Based Spatial Clustering and Application with Noise.
+
+The advantages of DBSCAN are:
+
+1. Unlike K-means, DBSCAN does not require the user to specify the number of clusters to be generated.
+2. DBSCAN can find any shape of clusters. The cluster doesn`t have to be circular.
+3. DBSCAN can identify outliers
+
+http://www.sthda.com/sthda/RDoc/images/dbscan-idea.png
+
+DBSCAN is based on this intuitive notion of "clusters" and "noise". The key idea is that for each point of a cluster, the neighborhood of a given radius has to contain at least a minimum number of points.
+
+Three R packages are used in this article:
+
+  1. fpc and dbscan for computing density-based clustering
+  2. factoextra for visualizing clusters
+
+The R packages fpc and dbscan can be installed as follow:
+
+```{r}
+# install.packages("fpc")
+# install.packages("dbscan")
+# In the following examples, we`ll use fpc package. A simplified format of the function is:
+db1 <- dbscan::dbscan(df, eps=0.15, MinPts = 5, scale = FALSE,  method = c("hybrid", "raw", "dist"))
+set.seed(123)
+db2 <- fpc::dbscan(df, eps=0.15, MinPts = 5)
+# Plot DBSCAN results
+plot(db1, df, main = "DBSCAN dbscan", frame = FALSE)
+plot(db2, df, main = "DBSCAN fpc", frame = FALSE)
+```
+Note that, the function plot.dbscan() uses different point symbols for core points (i.e, seed points) and border points. Black points correspond to outliers. You can play with eps and MinPts for changing cluster configurations.
+
+It can be seen that DBSCAN performs better for these data sets and can identify the correct set of clusters compared to k-means algorithms.
+It`s also possible to draw the plot above using the function fviz_cluster() [ in factoextra package]:
+```{r}
+fviz_cluster(db1, df, stand = FALSE, frame = FALSE, geom = "point", main = "DBSCAN with dbscan")
+fviz_cluster(db2, df, stand = FALSE, frame = FALSE, geom = "point", main = "DBSCAN with fpc")
+```
+The result of fpc::dbscan() function can be displayed as follow:
+```{r}
+# Print DBSCAN
+print(db1)
+print(db2)
+```
+In the table above, column names are cluster number. Cluster 0 corresponds to outliers (black points in the DBSCAN plot).
