@@ -1,0 +1,47 @@
+---
+title: "Decision Tree"
+output: html_notebook
+---
+Source : https://de.wikipedia.org/wiki/Entscheidungsbaum
+
+Um eine Klassifikation eines einzelnen Datenobjektes abzulesen, geht man vom Wurzelknoten entlang des Baumes abwärts. Bei jedem Knoten wird ein Attribut abgefragt und eine Entscheidung über die Auswahl des folgenden Knoten getroffen. Diese Prozedur wird so lange fortgesetzt, bis man ein Blatt erreicht. Das Blatt entspricht der Klassifikation. Ein Baum enthält grundsätzlich Regeln zur Beantwortung von nur genau einer Fragestellung.
+
+Die Fehlerrate eines Entscheidungsbaumes ist die Anzahl der inkorrekt klassifizierten Datenobjekte im Verhältnis zu allen Datenobjekten eines Datensatzes. Diese Zahl wird regelmäßig entweder auf den benutzten Trainingsdaten oder besser auf einer zu den Trainingsdaten disjunkten Menge an möglichst korrekt klassifizierten Datenobjekten ermittelt.
+
+Je nach Anwendungsbereich kann es von besonderer Bedeutung sein, entweder die Anzahl der falsch positiv oder falsch negativ klassifizierten Objekte im Speziellen niedrig zu halten. So ist es etwa in der Notfallmedizin wesentlich unschädlicher einen gesunden Patienten zu behandeln, als einen kranken Patienten nicht zu behandeln. Die Wirksamkeit von Entscheidungsbäumen ist daher immer auch eine kontextabhängige Größe.
+-- +/-
+Interpretierbarkeit und Verständlichkeit
+Ein großer Vorteil von Entscheidungsbäumen ist, dass sie gut erklärbar und nachvollziehbar sind. Dies erlaubt dem Benutzer, das Ergebnis auszuwerten und Schlüsselattribute zu erkennen. Das ist vor allem nützlich, wenn grundlegende Eigenschaften der Daten von vornherein nicht bekannt sind. Damit ist die Induktion von Entscheidungsbäumen auch eine wichtige Technik des Data-Minings.
+
+Klassifikationsgüte in reellwertigen Datenräumen
+Ein oft benannter Nachteil der Entscheidungsbäume ist die relativ geringe Klassifikationsgüte in reellwertigen Datenräumen, wenn man die Bäume zur automatischen Klassifikation einsetzt. So schneiden die Bäume aufgrund ihres diskreten Regelwerks bei den meisten Klassifikationsproblemen aus der realen Welt im Vergleich zu anderen Klassifikationstechniken wie beispielsweise Künstlichen Neuronalen Netzen oder Support-Vektor-Maschinen etwas schlechter. Das bedeutet, dass durch die Bäume zwar für Menschen leicht nachvollziehbare Regeln erzeugt werden können, diese verständlichen Regeln aber für Klassifikationsprobleme der realen Welt statistisch betrachtet oft nicht die bestmögliche Qualität besitzen.[6][7]
+
+Größe der Entscheidungsbäume und Überanpassung
+Ein weiterer Nachteil ist die mögliche Größe der Entscheidungsbäume, wenn sich aus den Trainingsdaten keine einfachen Regeln induzieren lassen. Dies kann sich mehrfach negativ auswirken: Zum einen verliert ein menschlicher Betrachter schnell den Gesamtüberblick über den Zusammenhang der vielen Regeln, zum anderen führen solche großen Bäume aber auch meistens zur Überanpassung an den Trainingsdatensatz, so dass neue Datensätze nur fehlerhaft automatisch klassifiziert werden. Es wurden deshalb so genannte Pruning-Methoden entwickelt, welche die Entscheidungsbäume auf eine vernünftige Größe kürzen. Beispielsweise kann man die maximale Tiefe der Bäume beschränken oder eine Mindestanzahl der Objekte pro Knoten festlegen.
+
+Weiterverarbeitung der Ergebnisse
+Oft bedient man sich der Entscheidungsbäume nur als Zwischenschritt zu einer effizienteren Darstellung des Regelwerkes. Um zu den Regeln zu gelangen, werden durch verschiedene Verfahren unterschiedliche Entscheidungsbäume generiert. Dabei werden häufig auftretende Regeln extrahiert. Die Optimierungen werden überlagert, um einen robusten, allgemeinen und korrekten Regelsatz zu erhalten. Dass die Regeln in keinerlei Beziehungen zueinander stehen und dass widersprüchliche Regeln erzeugt werden können, wirkt sich nachteilig auf diese Methode aus.
+
+Source : https://www.tutorialspoint.com/r/r_decision_tree.htm
+
+init
+```{r}
+# Load the party package. It will automatically load other dependent packages.
+library(party)
+
+# Print some records from data set readingSkills.
+print(head(readingSkills))
+```
+
+```{r}
+# Create the input data frame.
+input.dat <- readingSkills[c(1:105),]
+
+# Create the tree.
+output.tree <- ctree(nativeSpeaker ~ age + shoeSize + score, data = input.dat)
+
+# Plot the tree.
+plot(output.tree)
+```
+Conclusion
+From the decision tree shown above we can conclude that anyone whose readingSkills score is less than 38.3 and age is more than 6 is not a native Speaker.
