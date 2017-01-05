@@ -71,3 +71,62 @@ print(db1)
 print(db2)
 ```
 In the table above, column names are cluster number. Cluster 0 corresponds to outliers (black points in the DBSCAN plot).
+
+----
+
+5 Method for determining the optimal eps value
+
+The method proposed here consists of computing the he k-nearest neighbor distances in a matrix of points.
+The idea is to calculate, the average of the distances of every point to its k nearest neighbors. The value of k will be specified by the user and corresponds to MinPts.
+Next, these k-distances are plotted in an ascending order. The aim is to determine the "knee", which corresponds to the optimal eps parameter.
+A knee corresponds to a threshold where a sharp change occurs along the k-distance curve.
+The function kNNdistplot() [in dbscan package] can be used to draw the k-distance plot:
+```{r}
+dbscan::kNNdistplot(df, k =  5)
+abline(h = 0.15, lty = 2)
+```
+It can be seen that the optimal eps value is around a distance of 0.15.
+6 Cluster predictions with DBSCAN algorithm
+
+The function predict.dbscan(object, data, newdata) [in fpc package] can be used to predict the clusters for the points in newdata. For more details, read the documentation (?predict.dbscan).
+------------------------------------------------
+7 Application of DBSCAN on a real data
+
+The iris dataset is used:
+```{r}
+# Load the data
+data("iris")
+iris <- as.matrix(iris[, 1:4])
+```
+The optimal value of "eps" parameter can be determined as follow:
+```{r}
+dbscan::kNNdistplot(iris, k =  4)
+abline(h = 0.4, lty = 2)
+```
+Compute DBSCAN using fpc::dbscan() and dbscan::dbscan(). Make sure that the 2 packages are installed:
+```{r}
+set.seed(123)
+# fpc package
+res.fpc <- fpc::dbscan(iris, eps = 0.4, MinPts = 4)
+# dbscan package
+res.db <- dbscan::dbscan(iris, 0.4, 4)
+```
+The result of the function fpc::dbscan() provides an object of class 'dbscan' containing the following components:
+ o: cluster: integer vector coding cluster membership with noise observations (singletons) coded as 0
+ o: isseed: logical vector indicating whether a point is a seed (not border, not noise)
+ o: eps: parameter eps
+ o: MinPts: parameter MinPts
+The result of the function dbscan::dbscan() is an integer vector with cluster assignments. Zero indicates noise points.
+
+Note that the function dbscan:dbscan() is a fast re-implementation of DBSCAN algorithm. The implementation is significantly faster and can work with larger data sets than the function fpc:dbscan().
+
+Make sure that both version produce the same results:
+
+```{r}
+all(res.fpc$cluster == res.db$cluster)
+```
+
+Result : 
+```{r}
+fviz_cluster(res.fpc, iris, geom = "point")
+```
