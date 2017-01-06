@@ -2,8 +2,45 @@
 title: "Random Forest"
 output: html_notebook
 ---
+
+Ein Random Forest ist ein Klassifikationsverfahren, welches aus mehreren verschiedenen, unkorrelierten Entscheidungsbäumen besteht. Alle Entscheidungsbäume sind unter einer bestimmten Art von Randomisierung während des Lernprozesses gewachsen. Für eine Klassifikation darf jeder Baum in diesem Wald eine Entscheidung treffen und die Klasse mit den meisten Stimmen entscheidet die endgültige Klassifikation. Neben einer Klassifikation kann der Random Forest auch zur Regression eingesetzt werden.
+
+Eigenschaften:
+Ein Random Forest kann mit vielen Vorteilen gegenüber anderen Klassifikationsmethoden wie der SVM punkten.
+
+Der Klassifikator trainiert sehr schnell. Dieser Vorteil ergibt sich durch die kurze Trainings- bzw. Aufbauzeit eines einzelnen Entscheidungsbaumes. Die Trainingszeit bei einem Random Forest steigt linear mit der Anzahl der Bäume.
+Die Evaluierung eines Testbeispieles geschieht auf jedem Baum einzeln und ist daher parallelisierbar. Er evaluiert also schnell.
+Er ist sehr effizient auf große Datenmengen (Anzahl der Klassen, Beispiele sowie Merkmale) anzuwenden.
+Starke (wichtige) Klassen können erkannt werden.
+Der Zusammenhang von Klassen kann mittels Random Forests erkannt werden.
+
+1. Categorical Variable Decision Tree: Decision Tree which has categorical target variable then it called as categorical variable decision tree. Example:- In above scenario of student problem, where the target variable was “Student will play cricket or not” i.e. YES or NO.
+
+2. Continuous Variable Decision Tree: Decision Tree has continuous target variable then it is called as Continuous Variable Decision Tree.
+
+Advantages
+
++Easy to Understand: Decision tree output is very easy to understand even for people from non-analytical background. It does not require any statistical knowledge to read and interpret them. Its graphical representation is very intuitive and users can easily relate their hypothesis.
+
++Useful in Data exploration: Decision tree is one of the fastest way to identify most significant variables and relation between two or more variables. With the help of decision trees, we can create new variables / features that has better power to predict target variable. You can refer article (Trick to enhance power of regression model) for one such trick.  It can also be used in data exploration stage. For example, we are working on a problem where we have information available in hundreds of variables, there decision tree will help to identify most significant variable.
+
++Less data cleaning required: It requires less data cleaning compared to some other modeling techniques. It is not influenced by outliers and missing values to a fair degree.
+
++Data type is not a constraint: It can handle both numerical and categorical variables.
+
++Non Parametric Method: Decision tree is considered to be a non-parametric method. This means that decision trees have no assumptions about the space distribution and the classifier structure.
+ 
+
+Disadvantages
+
+-Over fitting: Over fitting is one of the most practical difficulty for decision tree models. This problem gets solved by setting constraints on model parameters and pruning (discussed in detailed below).
+
+-Not fit for continuous variables: While working with continuous numerical variables, decision tree looses information when it categorizes variables in different categories.
+
 ```{r}
 require(randomForest)
+require(car)
+Prestige
 ```
 Clear data from NA.
 ```{r}
@@ -12,7 +49,9 @@ clearedPrestige <- Prestige[complete.cases(Prestige),]
 Use random forest, for type column.
 ```{r}
 clearedPrestige.rf <- randomForest(clearedPrestige[,-6], clearedPrestige[,6], prox=TRUE)
+plot(clearedPrestige.rf)
 ```
+The plot seems to indicate that after 100 decision trees, there is not a significant reduction in error rate.
 ```{r}
 clearedPrestige.rf
 ```
@@ -28,8 +67,8 @@ clearedPrestige.p
 clearedPrestige[which(clearedPrestige$income == max(clearedPrestige$income)),]
 ```
 ```{r}
-plot(clearedPrestige[,3], clearedPrestige[,4], pch=21, xlab=names(clearedPrestige)[3], ylab=names(clearedPrestige)[4],
+plot(clearedPrestige[,2], clearedPrestige[,4], pch=21, xlab=names(clearedPrestige)[2], ylab=names(clearedPrestige)[4],
          bg=c("red", "blue", "green")[as.numeric(factor(clearedPrestige$type))],
          main="Prestige Data with Prototypes")
-points(clearedPrestige.p[,3], clearedPrestige.p[,4], pch=21, cex=2, bg=c("red", "blue", "green"))
+points(clearedPrestige.p[,2], clearedPrestige.p[,4], pch=21, cex=3, bg=c("blue", "red", "green"))
 ```
