@@ -1,34 +1,20 @@
 ---
-title: "PCA-Example with Wine Data"
+title: "PCA Wine Example"
 output: html_notebook
 ---
-Read Data from file
 ```{r}
-library("httr")
-a <- GET("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
-df <- read.csv(textConnection(content(a)), header=F)
-df
-```
-Clear and divide data:
-```{r}
-# clearedPrestige <- Prestige[complete.cases(Prestige),]
-# divide data
-numericalValues <- df[, 2:14]
-ordinalValues <- df[, 1]
-# clear data from inf-values
-numericalValues[is.infinite(numericalValues$women),] <- 0.00
+wine <- read.csv("~/Desktop/Datamining/winedata.csv", header = T)
+wine
 ```
 Normalize data with z-scores
 ```{r}
-normalizedData <- scale(numericalValues)
+normalizedData <- scale(wine)
 summary(normalizedData)
 ```
 ```{r}
-# par(mfrow=c(2, 2))
-# hist(clearedPrestige$income, main="Income", xlab = "Income")
-# hist(clearedPrestige$prestige, main="Prestige", xlab = "Prestige")
-# hist(normalizedData[,2], main="Normalized income", xlab = "Income")
-# hist(normalizedData[,4], main="Normalized prestige", xlab = "Prestige")
+par(mfrow=c(1, 2))
+hist(wine$Alcohol, main="Alcohol", xlab = "Alcohol")
+hist(normalizedData[,1], main="Normalized alcohol", xlab = "Alcohol")
 ```
 Show PCA-Data
 ```{r}
