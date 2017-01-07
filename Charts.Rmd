@@ -28,3 +28,13 @@ scatterplot3d(x = Prestige$income, y = Prestige$prestige, z = Prestige$education
           col.axis="blue", col.grid="lightblue",
           pch=1, main="3D Prestige", type="h")
 ```
+
+```{r}
+iris$isv <- as.numeric(iris$Species == "versicolor")
+mod <- glm(isv~Sepal.Length+Sepal.Width, data=iris, family="binomial")
+
+library(ROCR)
+pred1 <- prediction(predict(mod), iris$isv)
+perf1 <- performance(pred1,"tpr","fpr")
+plot(perf1)
+```

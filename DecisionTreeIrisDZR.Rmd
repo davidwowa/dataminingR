@@ -1,0 +1,25 @@
+---
+title: "Decision Tree Iris"
+output: html_notebook
+---
+Based on a tree of decision nodes, the learning approach is to recursively divide the training data into bucktes of homogeneous members through the most discriminative dividing criteria possible. The measurement of "homogeneity" is based on the output label; when it is a numeric value, the measurement will be the variance of the bucket; when it is a category, the measurement will be the entropy, or "gini index", of the bucket.
+During the training, various dividing criteria based on the input will be tried (and used in a greedly manner); whne the input is a category(Mon, Tue ...etc), it will ise true/false as a decision boundary to evaluate homogeneity; whne the input is a numeric or ordinal value, the lessThan/greaterThan at each training-data input value will serve as the decision boundary.
+The training process stops when there is no significant gain in homogeneity after further spliting the Tree. The members if the bucket represented at leaf node will vote for the prediction; the majority wins when the output is a numeric.
+```{r}
+library(rpart)
+testidx <- which(1:length(iris[,1])%%3==0)
+
+iristrain <- iris[-testidx,]
+iristest <- iris[testidx,]
+# create a trining model
+treemodel <- rpart(Species~., data=iristrain)
+plot(treemodel)
+text(treemodel, use.n = T)
+# predict
+prediction <- predict(treemodel, newdata = iristest, type = 'class')
+table(prediction, iristest$Species)
+# names(nnet_iristrain)[8] <- 'virginica'
+```
+The good part of the decision Tree is that it can take different data types of input and output variables that can be categorical, binary and numeric values. It can handle missing attributes and outliers well. Decision Tree is also good in explaining reasoning for its prediciton and therefore gives good insight about the underlying data.
+
+The limitation of decision tree is that each decision boundary at each split point is a concrete binary decision. Also, the decision criteria considers only one input attribute at a time, not a combination of multiple input variables. Another weakness of decision tree is that once learned it it cannot be updated incrementally. When new training data arrives, you have to throw away the old tree and retrain(umlernen) all data from scratch. In practice, standalone decision trees are rarely(selten) used because their accuracy ispredictive and relatively low. Three ensembles(Random Forest) are the common way to use decision trees.

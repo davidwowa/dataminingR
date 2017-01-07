@@ -37,19 +37,7 @@ clearedData$status_result <- factor(clearedData$status, levels = c(1, 2), labels
 Normalize Data for PCA and kNN:
 ```{r}
 # normalize
-
-# TODO 
-
-
-
-normalizedData <- scale(clearedData$inst)
-normalizedData <- scale(normalizedData[,2])
-normalizedData <- scale(normalizedData$age)
-normalizedData <- scale(normalizedData$ph.ecog)
-normalizedData <- scale(normalizedData$ph.karno)
-normalizedData <- scale(normalizedData$pat.karno)
-normalizedData <- scale(normalizedData$meal.cal)
-normalizedData <- scale(normalizedData$wt.loss)
+normalizedData <- scale(clearedData[,1:10])
 summary(normalizedData)
 ```
 PCA:
@@ -62,13 +50,13 @@ Split in Training and Testdata:
 train_data <- normalizedData[1:55,]
 test_data <- normalizedData[55:167,]
 # labels
-lbl_train_data <- normalizedData[1:55, 10]
-lbl_test_data <- normalizedData[55:167, 10]
+lbl_train_data <- clearedData[1:55, 11]
+lbl_test_data <- clearedData[55:167, 11]
 # installs
 # install.packages("class")
 # library(class)
 predict <- knn(train = train_data, test=test_data, cl=lbl_train_data, k=10 )
 # install.packages("gmodels")
-# library(gmodels)
+library(gmodels)
 CrossTable(x = lbl_test_data, y = predict, prop.chisq = FALSE)
 ```

@@ -1,0 +1,18 @@
+---
+title: "Bayesian Network and Naive Bayes"
+output: html_notebook
+---
+```{r}
+library(e1071)
+testidx <- which(1:length(iris[,1])%%3==0)
+
+iristrain <- iris[-testidx,]
+iristest <- iris[testidx,]
+# create model
+
+model <- naiveBayes(Species~., data=iristrain)
+
+# predict
+predictionD <- predict(model, iristest[,-5])
+table(predictionD, iristest[,5])
+```

@@ -1,0 +1,26 @@
+---
+title: "Random Forest (Tree Ensembles) DZR"
+output: html_notebook
+---
+Instead of picking a single model, Ensemble Method combines multiple models in a certain way to fit the training data. Here are the two primary ways: "bagging" and "boosting". In "bagging", we take a subset of training data(pick a n random sample out of N training data, with replacement) to train up each model. After multiple models are trained, we use a voting scheme to predict future data.
+Random Forest is one of the most popular bagging models: in addition to selecting n training data out of N at each decision node of tree, it randomly selects m input features from the total M features (m ~ M^0.5). Then it learns a decision tree from that. Finally, each tree in the forest votes for the result.
+```{r}
+testidx <- which(1:length(iris[,1])%%3==0)
+
+iristrain <- iris[-testidx,]
+iristest <- iris[testidx,]
+
+library(randomForest)
+# Train 100 trees, random selected attributes
+model <- randomForest(Species~., data=iristrain, nTree=500) # groeeres ntree weniger Fehler
+plot(model)
+```
+
+Predict
+```{r}
+prediction <- predict(model, newdata = iristest, type='class')
+table(prediction, iristest$Species)
+importance(model)
+```
+
+Boosting is another approach in Random Forest. Instead of sampling the input features, it samples the training data records. It puts more emphasis(Betonung), though(obwohl), on the training data that is wrognly predicted in previous iterations. Initially, each training data is equally weighted. At each iteration, the data trat is wrongly classified will have its weight increased.

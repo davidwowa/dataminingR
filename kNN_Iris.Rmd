@@ -1,0 +1,60 @@
+---
+title: "Iris Data k-Nearest-Neighbour"
+output: html_notebook
+---
+A contrast to model-based learning is K-Nearest neighbour. This is also called instance-based learning because it doesn't even leran a single model. The training process involves memorizing all the training data. To predict a new data point, we found the closest K (a tunable parameter) neighbours from the training set and let them vote for the final prediciton.
+
+To determine the "nearest neighbours" a distance function needs to be defined (e.g. a Euclidian distance function is a common one for the numeric input variables). The voting can also be weighted among the K-neighbors baesd on their distance from the new data point.
+
+The strenght of k-nearest neighbours is its simplicity. No model needs to be trained. Incremental learning is automatic when more data arrives (and old data can be deleted as well). The weakness of kNN, however, is that it doesn't handle high numbers of dimensions well.
+
+Data IRIS:
+```{r}
+iris
+```
+
+```{r}
+summary(iris)
+```
+```{r}
+pairs(main="Iris Data", iris, col=iris$Species)
+```
+```{r}
+plot.ts(main="Iris Data", iris)
+```
+```{r}
+d <- data.frame(Sepal.Length = iris$Sepal.Length, Sepal.Width = iris$Sepal.Width, Petal.Length = iris$Petal.Length, Petal.Width = iris$Petal.Width)
+m <- cor(d)
+library('corrplot')
+corrplot(m, method="circle")
+```
+Create build index:
+```{r}
+testidx <- which(1:length(iris[,1])%%3==0)
+```
+separate training data from test:
+```{r}
+iristrain <- iris[-testidx,]
+iristest <- iris[testidx,]
+
+train_input <- as.matrix(iristrain[,-5])
+train_output <- as.vector(iristrain[,5])
+test_input <- as.matrix(iristest[,-5])
+```
+####
+```{r}
+library(class)
+predict <- knn(train_input, test_input, train_output, k=10)
+table(predict, iristest$Species)
+```
+
+------------------------------------
+Next Example
+```{r}
+train <- rbind(iris3[1:25,,1], iris3[1:25,,2], iris3[1:25,,3])
+test <- rbind(iris3[26:50,,1], iris3[26:50,,2], iris3[26:50,,3])
+cl <- factor(c(rep("s",25), rep("c",25), rep("v",25)))
+require(class)
+iris_pred <- knn(train, test, cl, k = 3, prob=TRUE)
+iris_pred
+```
