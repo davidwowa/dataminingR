@@ -176,7 +176,7 @@ $(document).ready(function () {
 <h1>Generate the training and test samples</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VlZCA8LSAxODA5XG5zZXQuc2VlZChzZWVkKVxuIFxuZ2VuX2RhdGEgPC0gZnVuY3Rpb24obiwgYmV0YSwgc2lnbWFfZXBzKSB7XG4gICAgZXBzIDwtIHJub3JtKG4sIDAsIHNpZ21hX2VwcylcbiAgICB4IDwtIHNvcnQocnVuaWYobiwgMCwgMTAwKSlcbiAgICBYIDwtIGNiaW5kKDEsIHBvbHkoeCwgZGVncmVlID0gKGxlbmd0aChiZXRhKSAtIDEpLCByYXcgPSBUUlVFKSlcbiAgICB5IDwtIGFzLm51bWVyaWMoWCAlKiUgYmV0YSArIGVwcylcbiAgICBcbiAgICByZXR1cm4oZGF0YS5mcmFtZSh4ID0geCwgeSA9IHkpKVxufVxuIFxuIyBGaXQgdGhlIG1vZGVsc1xucmVxdWlyZShzcGxpbmVzKVxuIFxubl9yZXAgPC0gMTAwXG5uX2RmIDwtIDMwXG5kZiA8LSAxOm5fZGZcbmJldGEgPC0gYyg1LCAtMC4xLCAwLjAwNCwgLTNlLTA1KVxubl90cmFpbiA8LSA1MFxubl90ZXN0IDwtIDEwMDAwXG5zaWdtYV9lcHMgPC0gMC41XG4gXG54eSA8LSByZXMgPC0gbGlzdCgpXG54eV90ZXN0IDwtIGdlbl9kYXRhKG5fdGVzdCwgYmV0YSwgc2lnbWFfZXBzKVxuZm9yIChpIGluIDE6bl9yZXApIHtcbiAgICB4eVtbaV1dIDwtIGdlbl9kYXRhKG5fdHJhaW4sIGJldGEsIHNpZ21hX2VwcylcbiAgICB4IDwtIHh5W1tpXV1bLCBcInhcIl1cbiAgICB5IDwtIHh5W1tpXV1bLCBcInlcIl1cbiAgICByZXNbW2ldXSA8LSBhcHBseSh0KGRmKSwgMiwgZnVuY3Rpb24oZGVnZikgbG0oeSB+IG5zKHgsIGRmID0gZGVnZikpKVxufVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VlZCA8LSAxODA5XG5zZXQuc2VlZChzZWVkKVxuIFxuZ2VuX2RhdGEgPC0gZnVuY3Rpb24obiwgYmV0YSwgc2lnbWFfZXBzKSB7XG4gICAgZXBzIDwtIHJub3JtKG4sIDAsIHNpZ21hX2VwcylcbiAgICB4IDwtIHNvcnQocnVuaWYobiwgMCwgMTAwKSlcbiAgICBYIDwtIGNiaW5kKDEsIHBvbHkoeCwgZGVncmVlID0gKGxlbmd0aChiZXRhKSAtIDEpLCByYXcgPSBUUlVFKSlcbiAgICB5IDwtIGFzLm51bWVyaWMoWCAlKiUgYmV0YSArIGVwcylcbiAgICBcbiAgICByZXR1cm4oZGF0YS5mcmFtZSh4ID0geCwgeSA9IHkpKVxufVxuIFxuIyBGaXQgdGhlIG1vZGVsc1xucmVxdWlyZShzcGxpbmVzKVxuYGBgIn0= -->
 <pre class="r"><code>seed &lt;- 1809
 set.seed(seed)
  
@@ -190,8 +190,13 @@ gen_data &lt;- function(n, beta, sigma_eps) {
 }
  
 # Fit the models
-require(splines)
- 
+require(splines)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGFkZSBuw7Z0aWdlcyBQYWtldDogc3BsaW5lc1xuIn0= -->
+<pre><code>Lade nötiges Paket: splines</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIFxubl9yZXAgPC0gMTAwXG5uX2RmIDwtIDMwXG5kZiA8LSAxOm5fZGZcbmJldGEgPC0gYyg1LCAtMC4xLCAwLjAwNCwgLTNlLTA1KVxubl90cmFpbiA8LSA1MFxubl90ZXN0IDwtIDEwMDAwXG5zaWdtYV9lcHMgPC0gMC41XG4gXG54eSA8LSByZXMgPC0gbGlzdCgpXG54eV90ZXN0IDwtIGdlbl9kYXRhKG5fdGVzdCwgYmV0YSwgc2lnbWFfZXBzKVxuZm9yIChpIGluIDE6bl9yZXApIHtcbiAgICB4eVtbaV1dIDwtIGdlbl9kYXRhKG5fdHJhaW4sIGJldGEsIHNpZ21hX2VwcylcbiAgICB4IDwtIHh5W1tpXV1bLCBcInhcIl1cbiAgICB5IDwtIHh5W1tpXV1bLCBcInlcIl1cbiAgICByZXNbW2ldXSA8LSBhcHBseSh0KGRmKSwgMiwgZnVuY3Rpb24oZGVnZikgbG0oeSB+IG5zKHgsIGRmID0gZGVnZikpKVxufVxuYGBgIn0= -->
+<pre class="r"><code> 
 n_rep &lt;- 100
 n_df &lt;- 30
 df &lt;- 1:n_df

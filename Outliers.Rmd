@@ -15,22 +15,9 @@ summary(d)
 ```{r}
 pairs(d, main="Xx")
 ```
-Outlier isn't to see.
 ```{r}
-hist(d$X1)
-```
-```{r}
-hist(d$X2)
-```
-```{r}
-hist(d$X3)
-```
-
-```{r}
-plot(d$X3)
-```
-
-```{r}
-boxplot(d)
-tail(d)
+pca <- prcomp(d, center = TRUE, scale. = TRUE) 
+pca$rotation=-pca$rotation
+pca$x=-pca$x
+biplot (pca , scale =0)
 ```

@@ -222,14 +222,9 @@ barplot(counts, main=&quot;Types of prestige Data&quot;, xlab=&quot;Number of Ty
 <!-- rnb-plot-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShzY2F0dGVycGxvdDNkKVxuYGBgIn0= -->
-<pre class="r"><code>require(scatterplot3d)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGFkZSBuw7Z0aWdlcyBQYWtldDogc2NhdHRlcnBsb3QzZFxuIn0= -->
-<pre><code>Lade nötiges Paket: scatterplot3d</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2NhdHRlcnBsb3QzZCh4ID0gUHJlc3RpZ2UkaW5jb21lLCB5ID0gUHJlc3RpZ2UkcHJlc3RpZ2UsIHogPSBQcmVzdGlnZSRlZHVjYXRpb24sIGhpZ2hsaWdodC4zZD1UUlVFLFxuICAgICAgICAgIGNvbC5heGlzPVwiYmx1ZVwiLCBjb2wuZ3JpZD1cImxpZ2h0Ymx1ZVwiLFxuICAgICAgICAgIHBjaD0xLCBtYWluPVwiM0QgUHJlc3RpZ2VcIiwgdHlwZT1cImhcIilcbmBgYCJ9 -->
-<pre class="r"><code>scatterplot3d(x = Prestige$income, y = Prestige$prestige, z = Prestige$education, highlight.3d=TRUE,
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShzY2F0dGVycGxvdDNkKVxuc2NhdHRlcnBsb3QzZCh4ID0gUHJlc3RpZ2UkaW5jb21lLCB5ID0gUHJlc3RpZ2UkcHJlc3RpZ2UsIHogPSBQcmVzdGlnZSRlZHVjYXRpb24sIGhpZ2hsaWdodC4zZD1UUlVFLFxuICAgICAgICAgIGNvbC5heGlzPVwiYmx1ZVwiLCBjb2wuZ3JpZD1cImxpZ2h0Ymx1ZVwiLFxuICAgICAgICAgIHBjaD0xLCBtYWluPVwiM0QgUHJlc3RpZ2VcIiwgdHlwZT1cImhcIilcbmBgYCJ9 -->
+<pre class="r"><code>require(scatterplot3d)
+scatterplot3d(x = Prestige$income, y = Prestige$prestige, z = Prestige$education, highlight.3d=TRUE,
           col.axis=&quot;blue&quot;, col.grid=&quot;lightblue&quot;,
           pch=1, main=&quot;3D Prestige&quot;, type=&quot;h&quot;)</code></pre>
 <!-- rnb-source-end -->
